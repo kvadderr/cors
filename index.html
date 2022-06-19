@@ -23,43 +23,60 @@
         </div>
 
         <div id="myModal" class="modal">
-        <div class="container">
-            <div class="card">
-                <div class="form">
-                    <div class="left-side"> <span class="success"></span>
-                        <div class="image"> <img src="https://imgur.com/QrKJmrf.jpg"> </div>
-                        <div class="debit-card">
-                            <div class="card_name"> <small>Держатель карты</small> <span class="user_name">Бессмертный Данил</span> </div>
-                            <div class="num_expiry">
-                                <div class="card_number"> <small>Номер карты</small> <span class="set_card_number">0000 0000 0000 0000</span> </div>
-                                <div class="card_cvv"> <small>Дата</small> <span class="user_card_cvv">MM/YYYY</span> </div>
+            <div class="container">
+                <div class="card">
+                    <div class="form">
+                        <div class="left-side"> <span class="success"></span>
+                            <div class="image"> <img src="https://imgur.com/QrKJmrf.jpg"> </div>
+                            <div class="debit-card">
+                                <div class="card_name"> <small>Держатель карты</small> <span class="user_name">Бессмертный Данил</span> </div>
+                                <div class="num_expiry">
+                                    <div class="card_number"> <small>Номер карты</small> <span class="set_card_number">0000 0000 0000 0000</span> </div>
+                                    <div class="card_cvv"> <small>Дата</small> <span class="user_card_cvv">MM/YYYY</span> </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="right-side">
-                        <h3>Детали оплаты</h3>
-                        <div class="input-text"> <input type="text" id="user_name_input" onkeyup="userName(this.value)" placeholder="Username" require> <span>ФИО держателя</span> </div>
-                        <div class="input-text"> <input type="text" id="user_card_number_input" placeholder="0000 0000 0000 0000" onkeyup="userCardNumber(this.value)" data-slots="0" data-accept="\d" require> <span>Номер карты</span> </div>
-                        <div class="input-div">
-                            <div class="input-text"> <input type="text" onkeyup="usercardcvv(this.value)" placeholder="MM/YYYY" data-slots="MY" require> <span>Срок действия</span> </div>
-                            <div class="input-text "> <input type="text" placeholder="000" data-slots="0" data-accept="\d" size="3" require> <span>CVV</span> </div>
+                        <div class="right-side">
+                            <h3>Детали оплаты</h3>
+                            <div class="input-text"> <input type="text" id="user_name_input" onkeyup="userName(this.value)" placeholder="Username" require> <span>ФИО держателя</span> </div>
+                            <div class="input-text"> <input type="text" id="user_card_number_input" placeholder="0000 0000 0000 0000" onkeyup="userCardNumber(this.value)" data-slots="0" data-accept="\d" require> <span>Номер карты</span> </div>
+                            <div class="input-div">
+                                <div class="input-text"> <input type="text" onkeyup="usercardcvv(this.value)" placeholder="MM/YYYY" data-slots="MY" require> <span>Срок действия</span> </div>
+                                <div class="input-text "> <input type="text" placeholder="000" data-slots="0" data-accept="\d" size="3" require> <span>CVV</span> </div>
+                            </div>
+                            <button class="custom-btn btn-5" id="payBtn"><span>Оплатить</span></button>
+                            <button class="custom-btn btn-5" onclick="closeModal()"><span>Отменить</span></button> 
                         </div>
-                        <button class="custom-btn btn-5" id="payBtn"><span>Оплатить</span></button>
-                        <button class="custom-btn btn-5" onclick="closeModal()"><span>Отменить</span></button> 
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+
+        <div id="myCabinet" class="modal">
+            <div class="container">
+                <div class="card">
+                    <div class="form">
+                        <div class="right-side">
+                            <h3>Дипломы:</h3>
+                            <div id="diplomSpace"> 
+                            </div>
+                            <button class="custom-btn btn-5" onclick="closemyCabinet()"><span>Отменить</span></button> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </body>
     
     <script id = "profile" type="text/html">
   
         <div class="welcome">
              <h1 id="nameH">Здравствуй!</h1>
-             <div id="diplomSpace"> 
-             </div>
              <button class="custom-btn btn-5" onclick="exit()"><span>Выйти из аккаунта</span></button>
+             <button class="custom-btn btn-5" onclick="openmyCabinet()"><span>Личный кабинет</span></button>
          </div>
 
     </script>
@@ -102,9 +119,6 @@
                 <input placeholder="ФИО" id="FIORegInput">
                 <button class="custom-btn btn-5" onclick="register()"><span>Создать аккаунт</span></button>
             </div>
-
-
-
         </div>
     </script>
 
@@ -113,8 +127,16 @@
 
         // Get the modal
         var modal = document.getElementById("myModal");
+        var myCabinet= document.getElementById("myCabinet");
         var type = document.getElementsByName("typeUser");
         
+        function openmyCabinet(){
+            myCabinet.style.display = "block";
+        }
+
+        function closemyCabinet(){
+            myCabinet.style.display = "none";
+        }
 
       
         function openModal(){
@@ -124,6 +146,13 @@
         function closeModal(){
 
             modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+        if (event.target == myCabinet) {
+            myCabinet.style.display = "none";
+        }
         }
         
         // When the user clicks anywhere outside of the modal, close it
@@ -140,7 +169,7 @@
             openDiplom(code_id); 
         }
 
-        const url = new URL("http://95.213.224.23:3000/course");
+        const url = new URL("http://localhost:3000/course");
         
         var section = document.getElementById("section");
         
@@ -240,7 +269,7 @@
             id_user = localStorage.getItem("id_user");
 
             console.log(id_user, price, id_course);
-            fetch ('http://95.213.224.23:3000/finance', {
+            fetch ('http://localhost:3000/finance', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -311,7 +340,7 @@
 
         function getdataOfDiplom(){
             id_user = localStorage.getItem("id_user");
-            let url = new URL("http://95.213.224.23:3000/result?id_user="+id_user);
+            let url = new URL("http://localhost:3000/result?id_user="+id_user);
             var diplomSpace = document.getElementById("diplomSpace");
             
 
@@ -365,7 +394,7 @@
                 }
             }
 
-            fetch ('http://95.213.224.23:3000/users', {
+            fetch ('http://localhost:3000/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -394,7 +423,7 @@
                 checkStatus();
             } else {
 
-            const urlToUsers =  new URL("http://95.213.224.23:3000/users?login="+loginInput.value+"&pass="+passwordInput.value);
+            const urlToUsers =  new URL("http://localhost:3000/users?login="+loginInput.value+"&pass="+passwordInput.value);
             fetch(urlToUsers).then(function(response) {
                 response.json().then(function(data) {
                     if (data.length == 0) {
